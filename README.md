@@ -1,6 +1,3 @@
-Here is the updated **`README.md`** content with a note about the matrix feature coming soon:
-
-```markdown
 # Multi-Option Calculator (Turbo C)
 
 A feature-packed desktop utility built for **Turbo C / DOSBox** featuring an **Infix Expression Calculator**, **Temperature Converter**, **Base Converter**, and **Matrix Calculator**.
