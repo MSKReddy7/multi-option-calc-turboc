@@ -1,3 +1,5 @@
+Here is the updated **`README.md`** content with a note about the matrix feature coming soon:
+
 ```markdown
 # Multi-Option Calculator (Turbo C)
 
@@ -20,11 +22,11 @@ git clone [https://github.com/MSKReddy7/multi-option-calc-turboc.git](https://gi
 
 1. Move/copy the cloned project folder into your Turbo C directory (e.g., `C:\TC\BIN\` or your designated DOSBox mounted drive).
 2. Open **Turbo C**.
-3. Change your working directory to the project folder (`File` -> `Change dir`).
+3. Change your working directory to the project folder (`File` $\rightarrow$ `Change dir`).
 
 ### 3. Open `CALC.C`
 
-Go to **File** -> **Open** and select **`CALC.C`**.
+Go to **File** $\rightarrow$ **Open** and select **`CALC.C`**.
 
 > **Note:** You **only** need to open `CALC.C`. Do **not** open or compile `TEMP.C`, `BASE.C`, or `MSK.H` separately—`CALC.C` automatically includes all necessary module files and headers.
 
@@ -32,7 +34,7 @@ Go to **File** -> **Open** and select **`CALC.C`**.
 
 Before compiling, ensure the BGI graphics driver is linked:
 
-1. In Turbo C, go to **Options** -> **Linker** -> **Libraries**.
+1. In Turbo C, go to **Options** $\rightarrow$ **Linker** $\rightarrow$ **Libraries**.
 2. Make sure **Graphics library** is checked/enabled.
 3. Ensure your `initgraph` path in `CALC.C` matches your local BGI folder path (default: `C:\TC\BGI`).
 
@@ -49,6 +51,3 @@ Before compiling, ensure the BGI graphics driver is linked:
 * **Base Converter:** Supports conversion across Binary, Octal, Decimal, and Hexadecimal.
 * **Matrix Calculator:** *(Work in Progress)* Full matrix operations UI frame is integrated, but calculation routines are currently not implemented—coming soon!
 
-```
-
-```
