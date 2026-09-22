@@ -1,10 +1,9 @@
-#include<msk.h>
+	#include "msk.h"
 
 char select_operation='1';
 
 void border();
 void loading();
-
 
 void main()
 {
@@ -46,7 +45,6 @@ void main()
 
 		bar(416,206,580,162);//transpose
 		rect(416,206,580,162);
-
 
 		setcolor(10);
 		settextstyle(2,0,5);
@@ -118,14 +116,11 @@ void main()
 		else if(key==ENTER)
 		{
 			if(select_operation=='7')
-				exit(0);
+					break				;
 		}
 	}
 	closegraph();
 }
-
-
-
 
 void border()
 {
@@ -141,6 +136,7 @@ void border()
 	setfillstyle(1,0);
 	floodfill(5,5,15);
 }
+
 void loading()
 {
 	int _x,_y,i=0,j=0;

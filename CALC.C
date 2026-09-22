@@ -1,19 +1,21 @@
-#include<msk.h>
-#include<d:\calc\temp.c>
-#include<d:\calc\base.c>
+#include "msk.h"
+
+void select_temperature(); // Forward declaration from temp.c
+
+#include "temp.c"
+#include "base.c"
+
 char evaluate[60]={0},expression[30]={0};double result[30]={0};
 
 void drawbk();
 
 void show_calcs();
-void select_calc();
+int select_calc();
 void calculator();
 void printexpression();
 void infix(char s[]);
 int precision(char c);
 int isinteger(float number);
-
-
 
 void border();
 void start();
@@ -23,17 +25,15 @@ void main()
 {
 	int gd=DETECT,gm;
 	initgraph(&gd,&gm,"C:\\TC\\BGI");
-	//////////////////////////////////////////////////////////////////////
 
 	start();
 	while(1)
 	{
 		cleardevice();
 		show_calcs();
-		select_calc();
+		if(!select_calc()) break;
 	}
 
-	//////////////////////////////////////////////////////////////////////
 	closegraph();
 }
 
@@ -57,7 +57,6 @@ void show_calcs()
 	bar(208,282,402,238);
 	rect(210,280,400,240);rect(208,282,402,238);
 
-
 	bar(208,347,402,303);
 	rect(210,345,400,305);rect(208,347,402,303);
 	//COLOR
@@ -73,7 +72,6 @@ void show_calcs()
 	otxy(280,246," BASE");
 	otxy(265,258,"CALCULATOR");
 
-
 	otxy(280,311,"MATRIX");
 	otxy(265,323,"CALCULATOR");
 
@@ -83,11 +81,9 @@ void show_calcs()
 	otxy(178,165,"2.");
 	otxy(178,230,"3.");
 	otxy(178,295,"4.");
-
 }
 
-
-void select_calc()
+int select_calc()
 {
 	char calc;
 	read:
@@ -102,9 +98,11 @@ void select_calc()
 	else if(calc=='4')
 		calculator();
 	else if(calc==27)
-		exit(0);
+		return 0;
 	else
 		goto read;
+
+	return 1;
 }
 
 void calculator()
@@ -219,7 +217,6 @@ void calculator()
 	rect(180,360,230,400);
 	otxy(200,376,".");
 
-
 	bar(300,360,350,400);
 	rect(300,360,350,400);
 	otxy(320,376,"/");
@@ -241,13 +238,10 @@ void calculator()
 	rect(240,160,290,200);
 	otxy(253,178,"SCI ");
 
-
-
 	setfillstyle(1,2);
 	bar(360,360,410,400);
 	rect(360,360,410,400);
 	otxy(380,376,"=");
-
 
 	i=0;
 	while(1)
@@ -277,8 +271,10 @@ void calculator()
 					goto label1;
 				}
 				else
+				{
 					cleardevice();
 					goto label;
+				}
 			}
 			else if(expression[i]=='=')
 			{
@@ -320,7 +316,6 @@ void calculator()
 	}
 	else if(var!=27)//esc key
 		goto label2;
-
 }
 
 void printexpression()
@@ -356,8 +351,7 @@ int precision(char c)
 
 int isinteger(float number)
 {
-	char temp[20];
-	int integerpart,i;
+	int integerpart;
 	double fractionalpart;
 
 	integerpart=(int)number;
@@ -368,11 +362,8 @@ int isinteger(float number)
 	return 0;
 }
 
-
-
 void infix(char s[])
 {
-
 	int resultindex=-1;
 	char stack[30];
 	int stackindex=-1;
@@ -385,7 +376,7 @@ void infix(char s[])
 	i=0;
 	while(i<strlen(s))
 	{
-	if((s[i]=='+'||s[i]=='-')&&s[i+1]=='(')
+		if((s[i]=='+'||s[i]=='-')&&s[i+1]=='(')
 		{
 			int j=0,k=0,a=0;
 			while(j<=i)
@@ -403,7 +394,7 @@ void infix(char s[])
 				evaluate[j+1]='\0';
 				k++;
 			}
-				s[j+1]='\0';
+			s[j+1]='\0';
 			for(a=0;a<strlen(evaluate);a++)
 			{
 				s[a]=evaluate[a];
@@ -419,7 +410,7 @@ void infix(char s[])
 	i=0;
 	while(i<strlen(s))
 	{
-	if((s[i]>='0'&&s[i]<='9')&&s[i+1]=='(')
+		if((s[i]>='0'&&s[i]<='9')&&s[i+1]=='(')
 		{
 			int j=0,k=0,a=0;
 			while(j<=i)
@@ -436,7 +427,7 @@ void infix(char s[])
 				evaluate[j+1]='\0';
 				k++;
 			}
-				s[j+1]='\0';
+			s[j+1]='\0';
 			for(a=0;a<strlen(evaluate);a++)
 			{
 				s[a]=evaluate[a];
@@ -497,26 +488,26 @@ void infix(char s[])
 					case '/':
 						if(b==0)
 						{
-						settextstyle(1,0,3);
-						otxy(360,114,"Error");//Division by zero
-						return;
+							settextstyle(1,0,3);
+							otxy(360,114,"Error");//Division by zero
+							return;
 						}
 						else
-						result[++resultindex]=a/b;
+							result[++resultindex]=a/b;
 						break;
-					    case '^':result[++resultindex]=pow(a,b);break;
-					    default:
+					case '^':result[++resultindex]=pow(a,b);break;
+					default:
 						settextstyle(1,0,3);
 						otxy(360,114,"Error");//Invalid operator
 						return;
-					}
+				}
 				stackindex--;
 		    }
 		    if(stackindex<0||stack[stackindex]!='(')
 		    {
-			settextstyle(1,0,3);
-			otxy(360,114,"Error");//Mismatched parentheses
-			return;
+				settextstyle(1,0,3);
+				otxy(360,114,"Error");//Mismatched parentheses
+				return;
 		    }
 		    stackindex--;
 		}
@@ -532,51 +523,51 @@ void infix(char s[])
 				    case '-':result[++resultindex]=a-b;break;
 				    case '*':result[++resultindex]=a*b;break;
 				    case '/':
-					if(b==0)
-					{
-					    settextstyle(1,0,3);
-					    otxy(360,114,"Error");//Division by zero
-					    return;
-					}
-					else
-					result[++resultindex]=a/b;
-					break;
+						if(b==0)
+						{
+						    settextstyle(1,0,3);
+						    otxy(360,114,"Error");//Division by zero
+						    return;
+						}
+						else
+							result[++resultindex]=a/b;
+						break;
 				    case '^':result[++resultindex]=pow(a,b);break;
 				    default:
-					settextstyle(1,0,3);
-					otxy(360,114,"Error");//Invalid operator
-					return;
+						settextstyle(1,0,3);
+						otxy(360,114,"Error");//Invalid operator
+						return;
 				}
 				stackindex--;
 		    }
 		    stack[++stackindex]=c;
 		}
 		i++;
-	    }
-	    while(stackindex>=0&&resultindex>0)
-	    {
+	}
+	while(stackindex>=0&&resultindex>0)
+	{
 		b=result[resultindex--];
 		a=result[resultindex--];
 		switch(stack[stackindex])
 		{
-			    case '+':result[++resultindex]=a+b;break;
+		    case '+':result[++resultindex]=a+b;break;
 		    case '-':result[++resultindex]=a-b;break;
 		    case '*':result[++resultindex]=a*b;break;
 		    case '/':
-			if(b==0)
-			{
-			    settextstyle(1,0,3);
-			    otxy(360,114,"Error");//Division by zero
-			    return;
-			}
-			else
-			result[++resultindex]=a/b;
-			break;
+				if(b==0)
+				{
+				    settextstyle(1,0,3);
+				    otxy(360,114,"Error");//Division by zero
+				    return;
+				}
+				else
+					result[++resultindex]=a/b;
+				break;
 		    case '^':result[++resultindex]=pow(a,b);break;
 		    default:
-			settextstyle(1,0,3);
-			otxy(360,114,"Error");//Invalid operator
-			return;
+				settextstyle(1,0,3);
+				otxy(360,114,"Error");//Invalid operator
+				return;
 		}
 		stackindex--;
 	}
@@ -586,23 +577,21 @@ void infix(char s[])
 		otxy(360,114,"Error");//Mismatched operators or parentheses
 	}
 	else
-	{         if(isinteger(result[0])==1)
-			{
+	{
+		if(isinteger(result[0])==1)
+		{
 			settextstyle(1,0,3);
 			spf(temp1,"%.0f",result[0]);
 			otxy(400-((strlen(temp1))-1)*15,114,temp1);
 		}
 		else
-	     {
+		{
 			settextstyle(1,0,3);
 			spf(temp1,"%.5f",result[0]);
 			otxy(400-((strlen(temp1))-1)*15,114,temp1);
 		}
 	}
 }
-
-
-
 
 void border()
 {
@@ -681,6 +670,7 @@ void loading()
 	}
 	cleardevice();
 }
+
 void drawbk()
 {
 	setcolor(0);

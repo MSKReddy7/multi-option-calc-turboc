@@ -1,3 +1,5 @@
+#include "msk.h"
+
 char select_base,base_result1[30],base_result2[20],base_result3[20];
 
 void selectbase();
@@ -6,7 +8,6 @@ void btoany(char cha[]);
 void dtoany(char cha[]);
 void otoany(char cha[]);
 void hextoany(char cha[]);
-
 
 void border();
 void loading();
@@ -84,7 +85,6 @@ void selectbase()
 	}
 }
 
-
 void enterbase(int val,char str1[],char str2[],char str3[],char str4[],int val1)
 {
 	if(val1==1)
@@ -156,7 +156,6 @@ void enterbase(int val,char str1[],char str2[],char str3[],char str4[],int val1)
 	}
 }
 
-
 void btoany(char cha[])
 {
 	char ch,binary[20]={" "};
@@ -198,7 +197,6 @@ void btoany(char cha[])
 			goto label;
 		}
 
-
 		//input box
 		setfillstyle(9,1);
 		bar(20,170,250,270);
@@ -219,8 +217,8 @@ void btoany(char cha[])
 	j=0;
 	for(i=val-1;i>=0;i--)
 	{
-		      num+=(pow(2,i)*(binary[j]-48));
-		      j++;
+		num+=(pow(2,i)*(binary[j]-48));
+		j++;
 	}
 
 	spf(base_result1,"%d",num);
@@ -230,10 +228,8 @@ void btoany(char cha[])
 	spf(base_result3,"%X",num);
 	otxy(555-((strlen(base_result3)-1)*8),365,base_result3);
 
-
 	settextstyle(1,0,2);
 	otxy(10,y-30,"Enter C To Clear");
-
 
 	ch=getch();
 	if(ch==27)
@@ -245,7 +241,6 @@ void btoany(char cha[])
 		enterbase(1,"BINARY","OCTAL","DECIMAL","HEXADECIMAL",0);
 	}
 }
-
 
 void otoany(char cha[])
 {
@@ -289,7 +284,6 @@ void otoany(char cha[])
 			goto label;
 		}
 
-
 		//input box
 		setfillstyle(9,1);
 		bar(20,170,250,270);
@@ -329,10 +323,8 @@ void otoany(char cha[])
 	spf(base_result3,"%lX",integer);
 	otxy(555-((strlen(base_result3)-1)*8),365,base_result3);
 
-
 	settextstyle(1,0,2);
 	otxy(10,y-30,"Enter C To Clear");
-
 
 	ch=getch();
 	if(ch==27)
@@ -345,33 +337,32 @@ void otoany(char cha[])
 	}
 }
 
-
-
 void dtoany(char cha[])
 {
 	char ch,decimal[20]=" ",binary[60]=" ";
-	int val=0,num,i;
+	int val=0;
 	long integer,temp;
+	int i;
 
 	label:
-	    while(1)
-	    {
+	while(1)
+	{
 		ch=getch();
 		if(ch>='0'&&ch<='9')
 		{
-		    decimal[val++]=ch;
-		    decimal[val]='\0';
+			decimal[val++]=ch;
+			decimal[val]='\0';
 		}
 		else if(ch=='=')
 		{
-		    if(val>0)
+			if(val>0)
 				break;
 			else
 				goto label;
 		}
 		else if(ch==27)
 		{
-		    return;
+			return;
 		}
 		else if(ch==8)
 		{
@@ -382,12 +373,12 @@ void dtoany(char cha[])
 		}
 		else if(ch=='c'||ch=='C')
 		{
-		    val=0;
-		    for(i=0;i<20;i++)
-		    {
-			decimal[i]='\0';
-		    }
-		    goto label;
+			val=0;
+			for(i=0;i<20;i++)
+			{
+				decimal[i]='\0';
+			}
+			goto label;
 		}
 
 		setfillstyle(9,1);
@@ -405,70 +396,68 @@ void dtoany(char cha[])
 
 		settextstyle(0,0,1);
 		otxy(223-((strlen(decimal)-1)*8),235,decimal);
-	    }
+	}
 
-	    integer=atoi(decimal);
-	    temp=integer;
+	integer=atoi(decimal);
+	temp=integer;
 
-	    i=0;
-	    while(temp>0)
-	    {
+	i=0;
+	while(temp>0)
+	{
 		binary[i++]=(temp%2)+'0';
 		temp/=2;
-	    }
-	    binary[i]='\0';
-	    strrev(binary);
+	}
+	binary[i]='\0';
+	strrev(binary);
 
-	    spf(base_result1,"%s",binary);
-	    otxy(555-((strlen(base_result1)-1)*8),106,base_result1);
+	spf(base_result1,"%s",binary);
+	otxy(555-((strlen(base_result1)-1)*8),106,base_result1);
 
-	    spf(base_result2,"%lo",integer);
-	    otxy(555-((strlen(base_result2)-1)*8),235,base_result2);
+	spf(base_result2,"%lo",integer);
+	otxy(555-((strlen(base_result2)-1)*8),235,base_result2);
 
-	    spf(base_result3,"%lX",integer);
-	    otxy(555-((strlen(base_result3)-1)*8),365,base_result3);
+	spf(base_result3,"%lX",integer);
+	otxy(555-((strlen(base_result3)-1)*8),365,base_result3);
 
-	    settextstyle(1,0,2);
-	    otxy(10,y-30,"Enter C To Clear");
+	settextstyle(1,0,2);
+	otxy(10,y-30,"Enter C To Clear");
 
-	    ch=getch();
-	    if(ch==27)
-	    {
+	ch=getch();
+	if(ch==27)
+	{
 		return;
-	    }
-	    else if(ch=='c'||ch=='C')
-	    {
+	}
+	else if(ch=='c'||ch=='C')
+	{
 		enterbase(3,"DECIMAL","BINARY","OCTAL","HEXADECIMAL",0);
-	    }
+	}
 }
-
-
 
 void hextoany(char cha[])
 {
-	    char ch,hex[20]=" ",binary_str[30]=" ";
-	    int val=0,num,i;
-	    long integer,temp;
+	char ch,hex[20]=" ",binary_str[30]=" ";
+	int val=0,i;
+	long integer,temp;
 
-	    label:
-	    while(1)
-	    {
+	label:
+	while(1)
+	{
 		ch=getch();
 		if((ch>='0'&&ch<='9')||(ch>='A'&&ch<='F')||(ch>='a'&&ch<='f'))
 		{
-		    hex[val]=ch;
-		    hex[++val]='\0';
+			hex[val]=ch;
+			hex[++val]='\0';
 		}
 		else if(ch=='=')
 		{
-		    if(val>0)
+			if(val>0)
 				break;
 			else
 				goto label;
 		}
 		else if(ch==27)
 		{
-		    return;
+			return;
 		}
 		else if(ch==8)
 		{
@@ -479,10 +468,10 @@ void hextoany(char cha[])
 		}
 		else if(ch=='c'||ch=='C')
 		{
-		    val=0;
-		    for(i=0;i<20;i++)
-			hex[i]=' ';
-		    goto label;
+			val=0;
+			for(i=0;i<20;i++)
+				hex[i]=' ';
+			goto label;
 		}
 
 		setfillstyle(9,1);
@@ -500,39 +489,39 @@ void hextoany(char cha[])
 
 		settextstyle(0,0,1);
 		otxy(223-((strlen(hex)-1)*8),235,hex);
-	    }
+	}
 
-	    integer=strtol(hex,NULL,16);
-	    temp=integer;
+	integer=strtol(hex,NULL,16);
+	temp=integer;
 
-	    i=0;
-	    while(temp>0)
-	    {
+	i=0;
+	while(temp>0)
+	{
 		binary_str[i++]=(temp%2)+'0';
 		temp/=2;
-	    }
-	    binary_str[i]='\0';
-	    strrev(binary_str);
+	}
+	binary_str[i]='\0';
+	strrev(binary_str);
 
-	    spf(base_result1,"%s",binary_str);
-	    otxy(555-((strlen(base_result1)-1)*8),106,base_result1);
+	spf(base_result1,"%s",binary_str);
+	otxy(555-((strlen(base_result1)-1)*8),106,base_result1);
 
-	    spf(base_result2,"%lo",integer);
-	    otxy(555-((strlen(base_result2)-1)*8),235,base_result2);
+	spf(base_result2,"%lo",integer);
+	otxy(555-((strlen(base_result2)-1)*8),235,base_result2);
 
-	    spf(base_result3,"%ld",integer);
-	    otxy(555-((strlen(base_result3)-1)*8),365,base_result3);
+	spf(base_result3,"%ld",integer);
+	otxy(555-((strlen(base_result3)-1)*8),365,base_result3);
 
-	    settextstyle(1,0,2);
-	    otxy(10,y-30,"Enter C To Clear");
+	settextstyle(1,0,2);
+	otxy(10,y-30,"Enter C To Clear");
 
-	    ch=getch();
-	    if(ch==27)
-	    {
+	ch=getch();
+	if(ch==27)
+	{
 		return;
-	    }
-	    else if(ch=='c'||ch=='C')
-	    {
+	}
+	else if(ch=='c'||ch=='C')
+	{
 		enterbase(4,"HEXADECIMAL","BINARY","OCTAL","DECIMAL",0);
-	    }
+	}
 }

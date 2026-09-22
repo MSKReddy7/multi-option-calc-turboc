@@ -1,4 +1,4 @@
-#include<msk.h>
+#include "msk.h"
 
 char select_temp,read_temp[20]=" ",temp_result1[20],temp_result2[20],temp_result3[20];
 
@@ -8,10 +8,6 @@ void print_temperature(char str1[]);
 void calc_temp(int val);
 void border();
 void loading();
-
-
-
-
 
 void select_temperature()
 {
@@ -88,9 +84,7 @@ void select_temperature()
 
 void enter_temperature(int val,char str1[],char str2[],char str3[],char str4[],int val1)
 {
-	char ch;
 	int i=0,j=0;
-	double check;
 
 	if(val1==1)
 		loading();
@@ -145,7 +139,6 @@ void enter_temperature(int val,char str1[],char str2[],char str3[],char str4[],i
 	i=0;
 	while(1)
 	{
-		label1:
 		read_temp[i]=getch();
 		if(read_temp[i]==27||(read_temp[i]=='-'&&i==0)||(read_temp[i]>='0'&&read_temp[i]<='9')||read_temp[i]==8||read_temp[i]=='.'||read_temp[i]=='='||read_temp[i]=='c'||read_temp[i]=='C')
 		{
@@ -213,6 +206,7 @@ void enter_temperature(int val,char str1[],char str2[],char str3[],char str4[],i
 		}
 	}
 }
+
 void print_temperature(char str1[])
 {
 	char ch[15];
@@ -230,7 +224,6 @@ void print_temperature(char str1[])
 	setcolor(15);
 	settextstyle(1,0,2);
 	otxy(40,180,str1);
-
 
 	setcolor(15);
 	settextstyle(0,0,1);
@@ -336,5 +329,4 @@ void calc_temp(int val)
 		else if(ch!=27)
 			goto label4;
 	}
-
 }
